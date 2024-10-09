@@ -1,0 +1,93 @@
+---
+title: "SCS project1 draft"
+output: html_notebook
+---
+
+```{r}
+library(caret)
+source("~/desktop/SCSProj1/stylometryfunctions.R")
+M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
+set.seed(12345L)
+```
+
+```{r}
+# discriminant analysis and K=nearest neighbours
+
+traindata <- M$features
+testdata <- NULL
+testlabels <- NULL
+
+for( i in 1:length(traindata)){
+  
+  # keep author in training set if they have only the one book
+  if (nrow(M$features[[i]]) <= 1){  
+    next
+  }
+  
+  #select a random book by this author by choosing a row (= book)
+    testind <- sample(1:nrow(traindata[[i]]), 1)
+
+    #add this book to the test set
+
+    testdata <- rbind(testdata, traindata[[i]][testind,])
+
+    testlabels <- c(testlabels, i)
+
+    #now discard the book from the training set
+
+    traindata[[i]] <- traindata[[i]][-testind,,drop=FALSE]
+    
+}
+
+DApreds <- discriminantCorpus(traindata, testdata)
+DAacc <- sum(DApreds == testlabels) / length(testlabels)
+
+KNNpreds <- KNNCorpus(traindata, testdata)
+KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
+
+
+```
+
+```{r}
+# LOO-CV
+
+predictions <- NULL
+KNNpredictions <- NULL
+truth <- NULL
+features <- M$features
+
+for (i in 1:length(features)) {
+  for (j in 1:nrow(features[[i]])) {
+    
+    testdata <- matrix(features[[i]][j,],nrow=1)
+    traindata <- features
+    traindata[[i]] <- traindata[[i]][-j,,drop=FALSE]
+    
+    if (nrow(traindata[[i]]) == 0){
+      next
+    }
+    DApred <- discriminantCorpus(traindata, testdata)
+    predictions <- c(predictions, DApred)
+    
+    KNNpred <- KNNCorpus(traindata, testdata)
+    KNNpredictions <- c(KNNpredictions, KNNpred)
+    truth <- c(truth, i)
+  }
+}
+
+LOOCV_DAaccuracy <- sum(predictions == truth) / length(truth)
+LOOCV_KNNaccuracy <- sum(KNNpredictions == truth) / length(truth)
+```
+
+```{r}
+library(caret)
+
+DAconfusionmatrix <- confusionMatrix(as.factor(DApreds), 
+                                     as.factor(testlabels))
+DAconfusionmatrix
+
+KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
+                                      as.factor(testlabels))
+
+```
+
