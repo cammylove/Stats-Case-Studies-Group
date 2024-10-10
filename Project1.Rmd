@@ -89,3 +89,14 @@ KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
 
 ```
 
+```{r}
+# finding out who wrote the thing 
+
+trainset <- M$features[[-9]]
+testdata <- M$features[[9]]
+
+frankenstein_da <- discriminantCorpus(trainset, testset)
+frankenstein_knn <- KNNCorpus(trainset, testset)
+
+
+```
