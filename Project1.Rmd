@@ -5,7 +5,6 @@ output: html_notebook
 
 ```{r}
 library(caret)
-source("~/desktop/SCSProj1/stylometryfunctions.R")
 M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
 set.seed(12345L)
 ```
@@ -84,7 +83,6 @@ library(caret)
 
 DAconfusionmatrix <- confusionMatrix(as.factor(DApreds), 
                                      as.factor(testlabels))
-DAconfusionmatrix
 
 KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
                                       as.factor(testlabels))
