@@ -10,7 +10,7 @@ set.seed(12345L)
 ```
 
 ```{r}
-# discriminant analysis and K=nearest neighbours
+# discriminant analysis and K-nearest neighbours
 
 traindata <- M$features
 testdata <- NULL
@@ -38,17 +38,19 @@ for( i in 1:length(traindata)){
     
 }
 
+# obtaining DA prediction and accuracy (naive)
 DApreds <- discriminantCorpus(traindata, testdata)
 DAacc <- sum(DApreds == testlabels) / length(testlabels)
 
+# obtaining KNN prediction and accuracy (naive)
 KNNpreds <- KNNCorpus(traindata, testdata)
 KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
 
 
 ```
-
+---
 ```{r}
-# LOO-CV
+# LOO-CV, may need to do these in separate chunks for both methods.
 
 predictions <- NULL
 KNNpredictions <- NULL
@@ -58,6 +60,8 @@ features <- M$features
 for (i in 1:length(features)) {
   for (j in 1:nrow(features[[i]])) {
     
+    
+    
     testdata <- matrix(features[[i]][j,],nrow=1)
     traindata <- features
     traindata[[i]] <- traindata[[i]][-j,,drop=FALSE]
@@ -65,6 +69,8 @@ for (i in 1:length(features)) {
     if (nrow(traindata[[i]]) == 0){
       next
     }
+    
+    
     DApred <- discriminantCorpus(traindata, testdata)
     predictions <- c(predictions, DApred)
     
@@ -84,20 +90,27 @@ library(caret)
 DAconfusionmatrix <- confusionMatrix(as.factor(DApreds), 
                                      as.factor(testlabels))
 
+# still need to figure out how toget this confusion matrix to work??
 KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
                                       as.factor(testlabels))
-
+DAconfusionmatrix
 ```
 
 ```{r}
-# finding out who wrote the thing 
-
+# finding out who wrote frankenstein, using everything apart from 
+# frankenstein in teh training set and just that novel in the test set.
 trainset <- M$features[-9]
+testset <- M$features[[9]]
 
-testset <- M$features[9]
 
 frankenstein_da <- discriminantCorpus(trainset, testset)
 frankenstein_knn <- KNNCorpus(trainset, testset)
 
+print("DA prediction of author:")
+frankenstein_da
+print("KNN prediction of author:")
+frankenstein_knn
 
+print("reference:")
+print(M$authornames)
 ```
