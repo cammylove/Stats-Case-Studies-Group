@@ -57,20 +57,20 @@ KNNpredictions <- NULL
 truth <- NULL
 features <- M$features
 
+# loop over all of the books, adding all but one of them into the training set
+# and keeping one out for the test set (j in each loop)
 for (i in 1:length(features)) {
   for (j in 1:nrow(features[[i]])) {
-    
-    
     
     testdata <- matrix(features[[i]][j,],nrow=1)
     traindata <- features
     traindata[[i]] <- traindata[[i]][-j,,drop=FALSE]
     
+    # skip over authors who dont have enough books in their corpus. 
     if (nrow(traindata[[i]]) == 0){
       next
     }
-    
-    
+
     DApred <- discriminantCorpus(traindata, testdata)
     predictions <- c(predictions, DApred)
     
@@ -93,6 +93,7 @@ DAconfusionmatrix <- confusionMatrix(as.factor(DApreds),
 # still need to figure out how toget this confusion matrix to work??
 KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
                                       as.factor(testlabels))
+
 DAconfusionmatrix
 ```
 
