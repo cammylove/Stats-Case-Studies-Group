@@ -5,7 +5,13 @@ output: html_notebook
 
 ```{r}
 library(caret)
+
+#change this to whatever your own directory is 
+source("~/Desktop/SCSProj1/stylometryfunctions.R")
+
+# as above
 M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
+
 set.seed(12345L)
 ```
 
@@ -90,11 +96,33 @@ library(caret)
 DAconfusionmatrix <- confusionMatrix(as.factor(DApreds), 
                                      as.factor(testlabels))
 
-# still need to figure out how toget this confusion matrix to work??
-KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds),
-                                      as.factor(testlabels))
 
+```
+```{r}
+# getting KNN confusion matrix to work (i think it does...)
+
+# turning labels into character dtype
+KNNpreds_char <- as.character(KNNpreds)
+testlabels_char <- as.character(testlabels)
+
+# making sure the preds are a subset of testlabels
+valid_indices <- KNNpreds_char %in% testlabels_char
+
+# getting the valid preds/labels from the character
+KNNpreds_valid <- KNNpreds_char[valid_indices]
+testlabels_valid <- testlabels_char[valid_indices]
+
+# turning the valid preds/labels back into factors for the output of confusionmatrix 
+KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds_valid),
+                                      as.factor(testlabels_valid))
+
+print("DA confusion matrix:")     
 DAconfusionmatrix
+
+print("KNN confusion matrix")
+KNNconfusionmatrix
+
+
 ```
 
 ```{r}

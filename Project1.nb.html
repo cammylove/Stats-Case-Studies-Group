@@ -1754,9 +1754,15 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShjYXJldClcbk0gPC0gbG9hZENvcnB1cyhcIn4vRGVza3RvcC9TQ1NQcm9qMS9GdW5jdGlvbldvcmRzL1wiLCBcImZyZXF1ZW50d29yZHM3MFwiKVxuc2V0LnNlZWQoMTIzNDVMKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShjYXJldClcblxuI2NoYW5nZSB0aGlzIHRvIHdoYXRldmVyIHlvdXIgb3duIGRpcmVjdG9yeSBpcyBcbnNvdXJjZShcIn4vRGVza3RvcC9TQ1NQcm9qMS9zdHlsb21ldHJ5ZnVuY3Rpb25zLlJcIilcblxuIyBhcyBhYm92ZVxuTSA8LSBsb2FkQ29ycHVzKFwifi9EZXNrdG9wL1NDU1Byb2oxL0Z1bmN0aW9uV29yZHMvXCIsIFwiZnJlcXVlbnR3b3JkczcwXCIpXG5cbnNldC5zZWVkKDEyMzQ1TClcbmBgYCJ9 -->
 <pre class="r"><code>library(caret)
+
+#change this to whatever your own directory is 
+source(&quot;~/Desktop/SCSProj1/stylometryfunctions.R&quot;)
+
+# as above
 M &lt;- loadCorpus(&quot;~/Desktop/SCSProj1/FunctionWords/&quot;, &quot;frequentwords70&quot;)
+
 set.seed(12345L)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1806,7 +1812,7 @@ KNNacc &lt;- sum(KNNpreds == testlabels) / length(testlabels)
 <hr />
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMT08tQ1YsIG1heSBuZWVkIHRvIGRvIHRoZXNlIGluIHNlcGFyYXRlIGNodW5rcyBmb3IgYm90aCBtZXRob2RzLlxuXG5wcmVkaWN0aW9ucyA8LSBOVUxMXG5LTk5wcmVkaWN0aW9ucyA8LSBOVUxMXG50cnV0aCA8LSBOVUxMXG5mZWF0dXJlcyA8LSBNJGZlYXR1cmVzXG5cbmZvciAoaSBpbiAxOmxlbmd0aChmZWF0dXJlcykpIHtcbiAgZm9yIChqIGluIDE6bnJvdyhmZWF0dXJlc1tbaV1dKSkge1xuICAgIFxuICAgIFxuICAgIFxuICAgIHRlc3RkYXRhIDwtIG1hdHJpeChmZWF0dXJlc1tbaV1dW2osXSxucm93PTEpXG4gICAgdHJhaW5kYXRhIDwtIGZlYXR1cmVzXG4gICAgdHJhaW5kYXRhW1tpXV0gPC0gdHJhaW5kYXRhW1tpXV1bLWosLGRyb3A9RkFMU0VdXG4gICAgXG4gICAgaWYgKG5yb3codHJhaW5kYXRhW1tpXV0pID09IDApe1xuICAgICAgbmV4dFxuICAgIH1cbiAgICBcbiAgICBcbiAgICBEQXByZWQgPC0gZGlzY3JpbWluYW50Q29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpXG4gICAgcHJlZGljdGlvbnMgPC0gYyhwcmVkaWN0aW9ucywgREFwcmVkKVxuICAgIFxuICAgIEtOTnByZWQgPC0gS05OQ29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpXG4gICAgS05OcHJlZGljdGlvbnMgPC0gYyhLTk5wcmVkaWN0aW9ucywgS05OcHJlZClcbiAgICB0cnV0aCA8LSBjKHRydXRoLCBpKVxuICB9XG59XG5cbkxPT0NWX0RBYWNjdXJhY3kgPC0gc3VtKHByZWRpY3Rpb25zID09IHRydXRoKSAvIGxlbmd0aCh0cnV0aClcbkxPT0NWX0tOTmFjY3VyYWN5IDwtIHN1bShLTk5wcmVkaWN0aW9ucyA9PSB0cnV0aCkgLyBsZW5ndGgodHJ1dGgpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMT08tQ1YsIG1heSBuZWVkIHRvIGRvIHRoZXNlIGluIHNlcGFyYXRlIGNodW5rcyBmb3IgYm90aCBtZXRob2RzLlxuXG5wcmVkaWN0aW9ucyA8LSBOVUxMXG5LTk5wcmVkaWN0aW9ucyA8LSBOVUxMXG50cnV0aCA8LSBOVUxMXG5mZWF0dXJlcyA8LSBNJGZlYXR1cmVzXG5cbiMgbG9vcCBvdmVyIGFsbCBvZiB0aGUgYm9va3MsIGFkZGluZyBhbGwgYnV0IG9uZSBvZiB0aGVtIGludG8gdGhlIHRyYWluaW5nIHNldFxuIyBhbmQga2VlcGluZyBvbmUgb3V0IGZvciB0aGUgdGVzdCBzZXQgKGogaW4gZWFjaCBsb29wKVxuZm9yIChpIGluIDE6bGVuZ3RoKGZlYXR1cmVzKSkge1xuICBmb3IgKGogaW4gMTpucm93KGZlYXR1cmVzW1tpXV0pKSB7XG4gICAgXG4gICAgdGVzdGRhdGEgPC0gbWF0cml4KGZlYXR1cmVzW1tpXV1baixdLG5yb3c9MSlcbiAgICB0cmFpbmRhdGEgPC0gZmVhdHVyZXNcbiAgICB0cmFpbmRhdGFbW2ldXSA8LSB0cmFpbmRhdGFbW2ldXVstaiwsZHJvcD1GQUxTRV1cbiAgICBcbiAgICAjIHNraXAgb3ZlciBhdXRob3JzIHdobyBkb250IGhhdmUgZW5vdWdoIGJvb2tzIGluIHRoZWlyIGNvcnB1cy4gXG4gICAgaWYgKG5yb3codHJhaW5kYXRhW1tpXV0pID09IDApe1xuICAgICAgbmV4dFxuICAgIH1cblxuICAgIERBcHJlZCA8LSBkaXNjcmltaW5hbnRDb3JwdXModHJhaW5kYXRhLCB0ZXN0ZGF0YSlcbiAgICBwcmVkaWN0aW9ucyA8LSBjKHByZWRpY3Rpb25zLCBEQXByZWQpXG4gICAgXG4gICAgS05OcHJlZCA8LSBLTk5Db3JwdXModHJhaW5kYXRhLCB0ZXN0ZGF0YSlcbiAgICBLTk5wcmVkaWN0aW9ucyA8LSBjKEtOTnByZWRpY3Rpb25zLCBLTk5wcmVkKVxuICAgIHRydXRoIDwtIGModHJ1dGgsIGkpXG4gIH1cbn1cblxuTE9PQ1ZfREFhY2N1cmFjeSA8LSBzdW0ocHJlZGljdGlvbnMgPT0gdHJ1dGgpIC8gbGVuZ3RoKHRydXRoKVxuTE9PQ1ZfS05OYWNjdXJhY3kgPC0gc3VtKEtOTnByZWRpY3Rpb25zID09IHRydXRoKSAvIGxlbmd0aCh0cnV0aClcbmBgYCJ9 -->
 <pre class="r"><code># LOO-CV, may need to do these in separate chunks for both methods.
 
 predictions &lt;- NULL
@@ -1814,20 +1820,20 @@ KNNpredictions &lt;- NULL
 truth &lt;- NULL
 features &lt;- M$features
 
+# loop over all of the books, adding all but one of them into the training set
+# and keeping one out for the test set (j in each loop)
 for (i in 1:length(features)) {
   for (j in 1:nrow(features[[i]])) {
-    
-    
     
     testdata &lt;- matrix(features[[i]][j,],nrow=1)
     traindata &lt;- features
     traindata[[i]] &lt;- traindata[[i]][-j,,drop=FALSE]
     
+    # skip over authors who dont have enough books in their corpus. 
     if (nrow(traindata[[i]]) == 0){
       next
     }
-    
-    
+
     DApred &lt;- discriminantCorpus(traindata, testdata)
     predictions &lt;- c(predictions, DApred)
     
@@ -1853,14 +1859,137 @@ DAconfusionmatrix &lt;- confusionMatrix(as.factor(DApreds),
 <!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogbG9uZ2VyIG9iamVjdCBsZW5ndGggaXMgbm90IGEgbXVsdGlwbGUgb2Ygc2hvcnRlciBvYmplY3QgbGVuZ3RoV2FybmluZzogTGV2ZWxzIGFyZSBub3QgaW4gdGhlIHNhbWUgb3JkZXIgZm9yIHJlZmVyZW5jZSBhbmQgZGF0YS4gUmVmYWN0b3JpbmcgZGF0YSB0byBtYXRjaC5cbiJ9 -->
 <pre><code>Warning: longer object length is not a multiple of shorter object lengthWarning: Levels are not in the same order for reference and data. Refactoring data to match.</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzdGlsbCBuZWVkIHRvIGZpZ3VyZSBvdXQgaG93IHRvZ2V0IHRoaXMgY29uZnVzaW9uIG1hdHJpeCB0byB3b3JrPz9cbktOTmNvbmZ1c2lvbm1hdHJpeCA8LSBjb25mdXNpb25NYXRyaXgoYXMuZmFjdG9yKEtOTnByZWRzKSxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYXMuZmFjdG9yKHRlc3RsYWJlbHMpKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzdGlsbCBuZWVkIHRvIGZpZ3VyZSBvdXQgaG93IHRvZ2V0IHRoaXMgY29uZnVzaW9uIG1hdHJpeCB0byB3b3JrPz9cbiNLTk5jb25mdXNpb25tYXRyaXggPC0gY29uZnVzaW9uTWF0cml4KGFzLmZhY3RvcihLTk5wcmVkcyksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBhcy5mYWN0b3IodGVzdGxhYmVscykpXG5cbiNEQWNvbmZ1c2lvbm1hdHJpeFxuYGBgIn0= -->
 <pre class="r"><code># still need to figure out how toget this confusion matrix to work??
-KNNconfusionmatrix &lt;- confusionMatrix(as.factor(KNNpreds),
-                                      as.factor(testlabels))</code></pre>
+#KNNconfusionmatrix &lt;- confusionMatrix(as.factor(KNNpreds),
+                                     # as.factor(testlabels))
+
+#DAconfusionmatrix</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gY29uZnVzaW9uTWF0cml4LmRlZmF1bHQoYXMuZmFjdG9yKEtOTnByZWRzKSwgYXMuZmFjdG9yKHRlc3RsYWJlbHMpKSA6IFxuICB0aGUgZGF0YSBjYW5ub3QgaGF2ZSBtb3JlIGxldmVscyB0aGFuIHRoZSByZWZlcmVuY2VcbiJ9 -->
-<pre><code>Error in confusionMatrix.default(as.factor(KNNpreds), as.factor(testlabels)) : 
-  the data cannot have more levels than the reference</code></pre>
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuS05OcHJlZHNfY2hhciA8LSBhcy5jaGFyYWN0ZXIoS05OcHJlZHMpXG50ZXN0bGFiZWxzX2NoYXIgPC0gYXMuY2hhcmFjdGVyKHRlc3RsYWJlbHMpXG5cbnZhbGlkX2luZGljZXMgPC0gS05OcHJlZHNfY2hhciAlaW4lIHRlc3RsYWJlbHNfY2hhclxuXG5LTk5wcmVkc192YWxpZCA8LSBLTk5wcmVkc19jaGFyW3ZhbGlkX2luZGljZXNdXG50ZXN0bGFiZWxzX3ZhbGlkIDwtIHRlc3RsYWJlbHNfY2hhclt2YWxpZF9pbmRpY2VzXVxuXG5LTk5jb25mdXNpb25tYXRyaXggPC0gY29uZnVzaW9uTWF0cml4KGFzLmZhY3RvcihLTk5wcmVkc192YWxpZCksXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFzLmZhY3Rvcih0ZXN0bGFiZWxzX3ZhbGlkKSlcblxucHJpbnQoXCJEQSBjb25mdXNpb24gbWF0cml4OlwiKSAgICAgXG5gYGAifQ== -->
+<pre class="r"><code>KNNpreds_char &lt;- as.character(KNNpreds)
+testlabels_char &lt;- as.character(testlabels)
+
+valid_indices &lt;- KNNpreds_char %in% testlabels_char
+
+KNNpreds_valid &lt;- KNNpreds_char[valid_indices]
+testlabels_valid &lt;- testlabels_char[valid_indices]
+
+KNNconfusionmatrix &lt;- confusionMatrix(as.factor(KNNpreds_valid),
+                                      as.factor(testlabels_valid))
+
+print(&quot;DA confusion matrix:&quot;)     </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiREEgY29uZnVzaW9uIG1hdHJpeDpcIlxuIn0= -->
+<pre><code>[1] &quot;DA confusion matrix:&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuREFjb25mdXNpb25tYXRyaXhcbmBgYCJ9 -->
+<pre class="r"><code>DAconfusionmatrix</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDEgMiA0IDUgNiA3IDggMTAgMTFcbiAgICAgICAgMSAgMSAwIDAgMCAwIDAgMCAgMCAgMFxuICAgICAgICAyICAwIDEgMCAwIDAgMCAwICAwICAwXG4gICAgICAgIDQgIDAgMCAxIDEgMCAwIDAgIDAgIDFcbiAgICAgICAgNSAgMCAwIDAgMCAwIDAgMCAgMCAgMFxuICAgICAgICA2ICAwIDAgMCAwIDEgMCAwICAwICAwXG4gICAgICAgIDcgIDAgMCAwIDAgMCAxIDAgIDAgIDBcbiAgICAgICAgOCAgMCAwIDAgMCAwIDAgMSAgMCAgMFxuICAgICAgICAxMCAwIDAgMCAwIDAgMCAwICAxICAwXG4gICAgICAgIDExIDAgMCAwIDAgMCAwIDAgIDAgIDBcblxuT3ZlcmFsbCBTdGF0aXN0aWNzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgICAgICAgICAgICAgIEFjY3VyYWN5IDogMC43Nzc4ICAgICAgICAgIFxuICAgICAgICAgICAgICAgICA5NSUgQ0kgOiAoMC4zOTk5LCAwLjk3MTkpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuMTExMSAgICAgICAgICBcbiAgICBQLVZhbHVlIFtBY2MgPiBOSVJdIDogNi4xMzVlLTA2ICAgICAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDAuNzUgICAgICAgICAgICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIE1jbmVtYXIncyBUZXN0IFAtVmFsdWUgOiBOQSAgICAgICAgICAgICAgXG5cblN0YXRpc3RpY3MgYnkgQ2xhc3M6XG5cbiAgICAgICAgICAgICAgICAgICAgIENsYXNzOiAxIENsYXNzOiAyIENsYXNzOiA0IENsYXNzOiA1IENsYXNzOiA2IENsYXNzOiA3XG5TZW5zaXRpdml0eSAgICAgICAgICAgIDEuMDAwMCAgIDEuMDAwMCAgIDEuMDAwMCAgIDAuMDAwMCAgIDEuMDAwMCAgIDEuMDAwMFxuU3BlY2lmaWNpdHkgICAgICAgICAgICAxLjAwMDAgICAxLjAwMDAgICAwLjc1MDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcblBvcyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgMS4wMDAwICAgMC4zMzMzICAgICAgTmFOICAgMS4wMDAwICAgMS4wMDAwXG5OZWcgUHJlZCBWYWx1ZSAgICAgICAgIDEuMDAwMCAgIDEuMDAwMCAgIDEuMDAwMCAgIDAuODg4OSAgIDEuMDAwMCAgIDEuMDAwMFxuUHJldmFsZW5jZSAgICAgICAgICAgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTFcbkRldGVjdGlvbiBSYXRlICAgICAgICAgMC4xMTExICAgMC4xMTExICAgMC4xMTExICAgMC4wMDAwICAgMC4xMTExICAgMC4xMTExXG5EZXRlY3Rpb24gUHJldmFsZW5jZSAgIDAuMTExMSAgIDAuMTExMSAgIDAuMzMzMyAgIDAuMDAwMCAgIDAuMTExMSAgIDAuMTExMVxuQmFsYW5jZWQgQWNjdXJhY3kgICAgICAxLjAwMDAgICAxLjAwMDAgICAwLjg3NTAgICAwLjUwMDAgICAxLjAwMDAgICAxLjAwMDBcbiAgICAgICAgICAgICAgICAgICAgIENsYXNzOiA4IENsYXNzOiAxMCBDbGFzczogMTFcblNlbnNpdGl2aXR5ICAgICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAwLjAwMDBcblNwZWNpZmljaXR5ICAgICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDBcblBvcyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAgICBOYU5cbk5lZyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAwLjg4ODlcblByZXZhbGVuY2UgICAgICAgICAgICAgMC4xMTExICAgIDAuMTExMSAgICAwLjExMTFcbkRldGVjdGlvbiBSYXRlICAgICAgICAgMC4xMTExICAgIDAuMTExMSAgICAwLjAwMDBcbkRldGVjdGlvbiBQcmV2YWxlbmNlICAgMC4xMTExICAgIDAuMTExMSAgICAwLjAwMDBcbkJhbGFuY2VkIEFjY3VyYWN5ICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAwLjUwMDBcbiJ9 -->
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction 1 2 4 5 6 7 8 10 11
+        1  1 0 0 0 0 0 0  0  0
+        2  0 1 0 0 0 0 0  0  0
+        4  0 0 1 1 0 0 0  0  1
+        5  0 0 0 0 0 0 0  0  0
+        6  0 0 0 0 1 0 0  0  0
+        7  0 0 0 0 0 1 0  0  0
+        8  0 0 0 0 0 0 1  0  0
+        10 0 0 0 0 0 0 0  1  0
+        11 0 0 0 0 0 0 0  0  0
+
+Overall Statistics
+                                          
+               Accuracy : 0.7778          
+                 95% CI : (0.3999, 0.9719)
+    No Information Rate : 0.1111          
+    P-Value [Acc &gt; NIR] : 6.135e-06       
+                                          
+                  Kappa : 0.75            
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: 1 Class: 2 Class: 4 Class: 5 Class: 6 Class: 7
+Sensitivity            1.0000   1.0000   1.0000   0.0000   1.0000   1.0000
+Specificity            1.0000   1.0000   0.7500   1.0000   1.0000   1.0000
+Pos Pred Value         1.0000   1.0000   0.3333      NaN   1.0000   1.0000
+Neg Pred Value         1.0000   1.0000   1.0000   0.8889   1.0000   1.0000
+Prevalence             0.1111   0.1111   0.1111   0.1111   0.1111   0.1111
+Detection Rate         0.1111   0.1111   0.1111   0.0000   0.1111   0.1111
+Detection Prevalence   0.1111   0.1111   0.3333   0.0000   0.1111   0.1111
+Balanced Accuracy      1.0000   1.0000   0.8750   0.5000   1.0000   1.0000
+                     Class: 8 Class: 10 Class: 11
+Sensitivity            1.0000    1.0000    0.0000
+Specificity            1.0000    1.0000    1.0000
+Pos Pred Value         1.0000    1.0000       NaN
+Neg Pred Value         1.0000    1.0000    0.8889
+Prevalence             0.1111    0.1111    0.1111
+Detection Rate         0.1111    0.1111    0.0000
+Detection Prevalence   0.1111    0.1111    0.0000
+Balanced Accuracy      1.0000    1.0000    0.5000</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoXCJLTk4gY29uZnVzaW9uIG1hdHJpeFwiKVxuYGBgIn0= -->
+<pre class="r"><code>print(&quot;KNN confusion matrix&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiS05OIGNvbmZ1c2lvbiBtYXRyaXhcIlxuIn0= -->
+<pre><code>[1] &quot;KNN confusion matrix&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuS05OY29uZnVzaW9ubWF0cml4XG5gYGAifQ== -->
+<pre class="r"><code>KNNconfusionmatrix</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiQ29uZnVzaW9uIE1hdHJpeCBhbmQgU3RhdGlzdGljc1xuXG4gICAgICAgICAgUmVmZXJlbmNlXG5QcmVkaWN0aW9uIDEgMTAgMTEgMiA0IDUgNiA3IDhcbiAgICAgICAgMSAgMSAgMCAgMCAwIDAgMCAwIDAgMFxuICAgICAgICAxMCAwICAxICAwIDAgMCAwIDAgMCAwXG4gICAgICAgIDExIDAgIDAgIDEgMCAwIDAgMCAwIDBcbiAgICAgICAgMiAgMCAgMCAgMCAxIDAgMCAwIDAgMFxuICAgICAgICA0ICAwICAwICAwIDAgMSAwIDAgMCAwXG4gICAgICAgIDUgIDAgIDAgIDAgMCAwIDEgMCAwIDBcbiAgICAgICAgNiAgMCAgMCAgMCAwIDAgMCAxIDAgMFxuICAgICAgICA3ICAwICAwICAwIDAgMCAwIDAgMSAwXG4gICAgICAgIDggIDAgIDAgIDAgMCAwIDAgMCAwIDFcblxuT3ZlcmFsbCBTdGF0aXN0aWNzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICBBY2N1cmFjeSA6IDEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgIDk1JSBDSSA6ICgwLjY2MzcsIDEpXG4gICAgTm8gSW5mb3JtYXRpb24gUmF0ZSA6IDAuMTExMSAgICAgXG4gICAgUC1WYWx1ZSBbQWNjID4gTklSXSA6IDIuNTgxZS0wOSAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICBLYXBwYSA6IDEgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXG4gTWNuZW1hcidzIFRlc3QgUC1WYWx1ZSA6IE5BICAgICAgICAgXG5cblN0YXRpc3RpY3MgYnkgQ2xhc3M6XG5cbiAgICAgICAgICAgICAgICAgICAgIENsYXNzOiAxIENsYXNzOiAxMCBDbGFzczogMTEgQ2xhc3M6IDIgQ2xhc3M6IDQgQ2xhc3M6IDVcblNlbnNpdGl2aXR5ICAgICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcblNwZWNpZmljaXR5ICAgICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcblBvcyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcbk5lZyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcblByZXZhbGVuY2UgICAgICAgICAgICAgMC4xMTExICAgIDAuMTExMSAgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTFcbkRldGVjdGlvbiBSYXRlICAgICAgICAgMC4xMTExICAgIDAuMTExMSAgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTFcbkRldGVjdGlvbiBQcmV2YWxlbmNlICAgMC4xMTExICAgIDAuMTExMSAgICAwLjExMTEgICAwLjExMTEgICAwLjExMTEgICAwLjExMTFcbkJhbGFuY2VkIEFjY3VyYWN5ICAgICAgMS4wMDAwICAgIDEuMDAwMCAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcbiAgICAgICAgICAgICAgICAgICAgIENsYXNzOiA2IENsYXNzOiA3IENsYXNzOiA4XG5TZW5zaXRpdml0eSAgICAgICAgICAgIDEuMDAwMCAgIDEuMDAwMCAgIDEuMDAwMFxuU3BlY2lmaWNpdHkgICAgICAgICAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcblBvcyBQcmVkIFZhbHVlICAgICAgICAgMS4wMDAwICAgMS4wMDAwICAgMS4wMDAwXG5OZWcgUHJlZCBWYWx1ZSAgICAgICAgIDEuMDAwMCAgIDEuMDAwMCAgIDEuMDAwMFxuUHJldmFsZW5jZSAgICAgICAgICAgICAwLjExMTEgICAwLjExMTEgICAwLjExMTFcbkRldGVjdGlvbiBSYXRlICAgICAgICAgMC4xMTExICAgMC4xMTExICAgMC4xMTExXG5EZXRlY3Rpb24gUHJldmFsZW5jZSAgIDAuMTExMSAgIDAuMTExMSAgIDAuMTExMVxuQmFsYW5jZWQgQWNjdXJhY3kgICAgICAxLjAwMDAgICAxLjAwMDAgICAxLjAwMDBcbiJ9 -->
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction 1 10 11 2 4 5 6 7 8
+        1  1  0  0 0 0 0 0 0 0
+        10 0  1  0 0 0 0 0 0 0
+        11 0  0  1 0 0 0 0 0 0
+        2  0  0  0 1 0 0 0 0 0
+        4  0  0  0 0 1 0 0 0 0
+        5  0  0  0 0 0 1 0 0 0
+        6  0  0  0 0 0 0 1 0 0
+        7  0  0  0 0 0 0 0 1 0
+        8  0  0  0 0 0 0 0 0 1
+
+Overall Statistics
+                                     
+               Accuracy : 1          
+                 95% CI : (0.6637, 1)
+    No Information Rate : 0.1111     
+    P-Value [Acc &gt; NIR] : 2.581e-09  
+                                     
+                  Kappa : 1          
+                                     
+ Mcnemar&#39;s Test P-Value : NA         
+
+Statistics by Class:
+
+                     Class: 1 Class: 10 Class: 11 Class: 2 Class: 4 Class: 5
+Sensitivity            1.0000    1.0000    1.0000   1.0000   1.0000   1.0000
+Specificity            1.0000    1.0000    1.0000   1.0000   1.0000   1.0000
+Pos Pred Value         1.0000    1.0000    1.0000   1.0000   1.0000   1.0000
+Neg Pred Value         1.0000    1.0000    1.0000   1.0000   1.0000   1.0000
+Prevalence             0.1111    0.1111    0.1111   0.1111   0.1111   0.1111
+Detection Rate         0.1111    0.1111    0.1111   0.1111   0.1111   0.1111
+Detection Prevalence   0.1111    0.1111    0.1111   0.1111   0.1111   0.1111
+Balanced Accuracy      1.0000    1.0000    1.0000   1.0000   1.0000   1.0000
+                     Class: 6 Class: 7 Class: 8
+Sensitivity            1.0000   1.0000   1.0000
+Specificity            1.0000   1.0000   1.0000
+Pos Pred Value         1.0000   1.0000   1.0000
+Neg Pred Value         1.0000   1.0000   1.0000
+Prevalence             0.1111   0.1111   0.1111
+Detection Rate         0.1111   0.1111   0.1111
+Detection Prevalence   0.1111   0.1111   0.1111
+Balanced Accuracy      1.0000   1.0000   1.0000</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1917,7 +2046,7 @@ Levels: 1 2 3 4 5 6 7 8 9 10 11</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiU0NTIHByb2plY3QxIGRyYWZ0IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpgYGB7cn0KbGlicmFyeShjYXJldCkKTSA8LSBsb2FkQ29ycHVzKCJ+L0Rlc2t0b3AvU0NTUHJvajEvRnVuY3Rpb25Xb3Jkcy8iLCAiZnJlcXVlbnR3b3JkczcwIikKc2V0LnNlZWQoMTIzNDVMKQpgYGAKCmBgYHtyfQojIGRpc2NyaW1pbmFudCBhbmFseXNpcyBhbmQgSy1uZWFyZXN0IG5laWdoYm91cnMKCnRyYWluZGF0YSA8LSBNJGZlYXR1cmVzCnRlc3RkYXRhIDwtIE5VTEwKdGVzdGxhYmVscyA8LSBOVUxMCgpmb3IoIGkgaW4gMTpsZW5ndGgodHJhaW5kYXRhKSl7CiAgCiAgIyBrZWVwIGF1dGhvciBpbiB0cmFpbmluZyBzZXQgaWYgdGhleSBoYXZlIG9ubHkgdGhlIG9uZSBib29rCiAgaWYgKG5yb3coTSRmZWF0dXJlc1tbaV1dKSA8PSAxKXsgIAogICAgbmV4dAogIH0KICAKICAjc2VsZWN0IGEgcmFuZG9tIGJvb2sgYnkgdGhpcyBhdXRob3IgYnkgY2hvb3NpbmcgYSByb3cgKD0gYm9vaykKICAgIHRlc3RpbmQgPC0gc2FtcGxlKDE6bnJvdyh0cmFpbmRhdGFbW2ldXSksIDEpCgogICAgI2FkZCB0aGlzIGJvb2sgdG8gdGhlIHRlc3Qgc2V0CgogICAgdGVzdGRhdGEgPC0gcmJpbmQodGVzdGRhdGEsIHRyYWluZGF0YVtbaV1dW3Rlc3RpbmQsXSkKCiAgICB0ZXN0bGFiZWxzIDwtIGModGVzdGxhYmVscywgaSkKCiAgICAjbm93IGRpc2NhcmQgdGhlIGJvb2sgZnJvbSB0aGUgdHJhaW5pbmcgc2V0CgogICAgdHJhaW5kYXRhW1tpXV0gPC0gdHJhaW5kYXRhW1tpXV1bLXRlc3RpbmQsLGRyb3A9RkFMU0VdCiAgICAKfQoKIyBvYnRhaW5pbmcgREEgcHJlZGljdGlvbiBhbmQgYWNjdXJhY3kgKG5haXZlKQpEQXByZWRzIDwtIGRpc2NyaW1pbmFudENvcnB1cyh0cmFpbmRhdGEsIHRlc3RkYXRhKQpEQWFjYyA8LSBzdW0oREFwcmVkcyA9PSB0ZXN0bGFiZWxzKSAvIGxlbmd0aCh0ZXN0bGFiZWxzKQoKIyBvYnRhaW5pbmcgS05OIHByZWRpY3Rpb24gYW5kIGFjY3VyYWN5IChuYWl2ZSkKS05OcHJlZHMgPC0gS05OQ29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpCktOTmFjYyA8LSBzdW0oS05OcHJlZHMgPT0gdGVzdGxhYmVscykgLyBsZW5ndGgodGVzdGxhYmVscykKCgpgYGAKLS0tCmBgYHtyfQojIExPTy1DViwgbWF5IG5lZWQgdG8gZG8gdGhlc2UgaW4gc2VwYXJhdGUgY2h1bmtzIGZvciBib3RoIG1ldGhvZHMuCgpwcmVkaWN0aW9ucyA8LSBOVUxMCktOTnByZWRpY3Rpb25zIDwtIE5VTEwKdHJ1dGggPC0gTlVMTApmZWF0dXJlcyA8LSBNJGZlYXR1cmVzCgojIGxvb3Agb3ZlciBhbGwgb2YgdGhlIGJvb2tzLCBhZGRpbmcgYWxsIGJ1dCBvbmUgb2YgdGhlbSBpbnRvIHRoZSB0cmFpbmluZyBzZXQKIyBhbmQga2VlcGluZyBvbmUgb3V0IGZvciB0aGUgdGVzdCBzZXQgKGogaW4gZWFjaCBsb29wKQpmb3IgKGkgaW4gMTpsZW5ndGgoZmVhdHVyZXMpKSB7CiAgZm9yIChqIGluIDE6bnJvdyhmZWF0dXJlc1tbaV1dKSkgewogICAgCiAgICB0ZXN0ZGF0YSA8LSBtYXRyaXgoZmVhdHVyZXNbW2ldXVtqLF0sbnJvdz0xKQogICAgdHJhaW5kYXRhIDwtIGZlYXR1cmVzCiAgICB0cmFpbmRhdGFbW2ldXSA8LSB0cmFpbmRhdGFbW2ldXVstaiwsZHJvcD1GQUxTRV0KICAgIAogICAgIyBza2lwIG92ZXIgYXV0aG9ycyB3aG8gZG9udCBoYXZlIGVub3VnaCBib29rcyBpbiB0aGVpciBjb3JwdXMuIAogICAgaWYgKG5yb3codHJhaW5kYXRhW1tpXV0pID09IDApewogICAgICBuZXh0CiAgICB9CgogICAgREFwcmVkIDwtIGRpc2NyaW1pbmFudENvcnB1cyh0cmFpbmRhdGEsIHRlc3RkYXRhKQogICAgcHJlZGljdGlvbnMgPC0gYyhwcmVkaWN0aW9ucywgREFwcmVkKQogICAgCiAgICBLTk5wcmVkIDwtIEtOTkNvcnB1cyh0cmFpbmRhdGEsIHRlc3RkYXRhKQogICAgS05OcHJlZGljdGlvbnMgPC0gYyhLTk5wcmVkaWN0aW9ucywgS05OcHJlZCkKICAgIHRydXRoIDwtIGModHJ1dGgsIGkpCiAgfQp9CgpMT09DVl9EQWFjY3VyYWN5IDwtIHN1bShwcmVkaWN0aW9ucyA9PSB0cnV0aCkgLyBsZW5ndGgodHJ1dGgpCkxPT0NWX0tOTmFjY3VyYWN5IDwtIHN1bShLTk5wcmVkaWN0aW9ucyA9PSB0cnV0aCkgLyBsZW5ndGgodHJ1dGgpCmBgYAoKYGBge3J9CmxpYnJhcnkoY2FyZXQpCgpEQWNvbmZ1c2lvbm1hdHJpeCA8LSBjb25mdXNpb25NYXRyaXgoYXMuZmFjdG9yKERBcHJlZHMpLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFzLmZhY3Rvcih0ZXN0bGFiZWxzKSkKCiMgc3RpbGwgbmVlZCB0byBmaWd1cmUgb3V0IGhvdyB0b2dldCB0aGlzIGNvbmZ1c2lvbiBtYXRyaXggdG8gd29yaz8/CktOTmNvbmZ1c2lvbm1hdHJpeCA8LSBjb25mdXNpb25NYXRyaXgoYXMuZmFjdG9yKEtOTnByZWRzKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhcy5mYWN0b3IodGVzdGxhYmVscykpCgpEQWNvbmZ1c2lvbm1hdHJpeApgYGAKCmBgYHtyfQojIGZpbmRpbmcgb3V0IHdobyB3cm90ZSBmcmFua2Vuc3RlaW4sIHVzaW5nIGV2ZXJ5dGhpbmcgYXBhcnQgZnJvbSAKIyBmcmFua2Vuc3RlaW4gaW4gdGVoIHRyYWluaW5nIHNldCBhbmQganVzdCB0aGF0IG5vdmVsIGluIHRoZSB0ZXN0IHNldC4KdHJhaW5zZXQgPC0gTSRmZWF0dXJlc1stOV0KdGVzdHNldCA8LSBNJGZlYXR1cmVzW1s5XV0KCgpmcmFua2Vuc3RlaW5fZGEgPC0gZGlzY3JpbWluYW50Q29ycHVzKHRyYWluc2V0LCB0ZXN0c2V0KQpmcmFua2Vuc3RlaW5fa25uIDwtIEtOTkNvcnB1cyh0cmFpbnNldCwgdGVzdHNldCkKCnByaW50KCJEQSBwcmVkaWN0aW9uIG9mIGF1dGhvcjoiKQpmcmFua2Vuc3RlaW5fZGEKcHJpbnQoIktOTiBwcmVkaWN0aW9uIG9mIGF1dGhvcjoiKQpmcmFua2Vuc3RlaW5fa25uCgpwcmludCgicmVmZXJlbmNlOiIpCnByaW50KE0kYXV0aG9ybmFtZXMpCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiU0NTIHByb2plY3QxIGRyYWZ0IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgpgYGB7cn0KbGlicmFyeShjYXJldCkKCiNjaGFuZ2UgdGhpcyB0byB3aGF0ZXZlciB5b3VyIG93biBkaXJlY3RvcnkgaXMgCnNvdXJjZSgifi9EZXNrdG9wL1NDU1Byb2oxL3N0eWxvbWV0cnlmdW5jdGlvbnMuUiIpCgojIGFzIGFib3ZlCk0gPC0gbG9hZENvcnB1cygifi9EZXNrdG9wL1NDU1Byb2oxL0Z1bmN0aW9uV29yZHMvIiwgImZyZXF1ZW50d29yZHM3MCIpCgpzZXQuc2VlZCgxMjM0NUwpCmBgYAoKYGBge3J9CiMgZGlzY3JpbWluYW50IGFuYWx5c2lzIGFuZCBLLW5lYXJlc3QgbmVpZ2hib3VycwoKdHJhaW5kYXRhIDwtIE0kZmVhdHVyZXMKdGVzdGRhdGEgPC0gTlVMTAp0ZXN0bGFiZWxzIDwtIE5VTEwKCmZvciggaSBpbiAxOmxlbmd0aCh0cmFpbmRhdGEpKXsKICAKICAjIGtlZXAgYXV0aG9yIGluIHRyYWluaW5nIHNldCBpZiB0aGV5IGhhdmUgb25seSB0aGUgb25lIGJvb2sKICBpZiAobnJvdyhNJGZlYXR1cmVzW1tpXV0pIDw9IDEpeyAgCiAgICBuZXh0CiAgfQogIAogICNzZWxlY3QgYSByYW5kb20gYm9vayBieSB0aGlzIGF1dGhvciBieSBjaG9vc2luZyBhIHJvdyAoPSBib29rKQogICAgdGVzdGluZCA8LSBzYW1wbGUoMTpucm93KHRyYWluZGF0YVtbaV1dKSwgMSkKCiAgICAjYWRkIHRoaXMgYm9vayB0byB0aGUgdGVzdCBzZXQKCiAgICB0ZXN0ZGF0YSA8LSByYmluZCh0ZXN0ZGF0YSwgdHJhaW5kYXRhW1tpXV1bdGVzdGluZCxdKQoKICAgIHRlc3RsYWJlbHMgPC0gYyh0ZXN0bGFiZWxzLCBpKQoKICAgICNub3cgZGlzY2FyZCB0aGUgYm9vayBmcm9tIHRoZSB0cmFpbmluZyBzZXQKCiAgICB0cmFpbmRhdGFbW2ldXSA8LSB0cmFpbmRhdGFbW2ldXVstdGVzdGluZCwsZHJvcD1GQUxTRV0KICAgIAp9CgojIG9idGFpbmluZyBEQSBwcmVkaWN0aW9uIGFuZCBhY2N1cmFjeSAobmFpdmUpCkRBcHJlZHMgPC0gZGlzY3JpbWluYW50Q29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpCkRBYWNjIDwtIHN1bShEQXByZWRzID09IHRlc3RsYWJlbHMpIC8gbGVuZ3RoKHRlc3RsYWJlbHMpCgojIG9idGFpbmluZyBLTk4gcHJlZGljdGlvbiBhbmQgYWNjdXJhY3kgKG5haXZlKQpLTk5wcmVkcyA8LSBLTk5Db3JwdXModHJhaW5kYXRhLCB0ZXN0ZGF0YSkKS05OYWNjIDwtIHN1bShLTk5wcmVkcyA9PSB0ZXN0bGFiZWxzKSAvIGxlbmd0aCh0ZXN0bGFiZWxzKQoKCmBgYAotLS0KYGBge3J9CiMgTE9PLUNWLCBtYXkgbmVlZCB0byBkbyB0aGVzZSBpbiBzZXBhcmF0ZSBjaHVua3MgZm9yIGJvdGggbWV0aG9kcy4KCnByZWRpY3Rpb25zIDwtIE5VTEwKS05OcHJlZGljdGlvbnMgPC0gTlVMTAp0cnV0aCA8LSBOVUxMCmZlYXR1cmVzIDwtIE0kZmVhdHVyZXMKCiMgbG9vcCBvdmVyIGFsbCBvZiB0aGUgYm9va3MsIGFkZGluZyBhbGwgYnV0IG9uZSBvZiB0aGVtIGludG8gdGhlIHRyYWluaW5nIHNldAojIGFuZCBrZWVwaW5nIG9uZSBvdXQgZm9yIHRoZSB0ZXN0IHNldCAoaiBpbiBlYWNoIGxvb3ApCmZvciAoaSBpbiAxOmxlbmd0aChmZWF0dXJlcykpIHsKICBmb3IgKGogaW4gMTpucm93KGZlYXR1cmVzW1tpXV0pKSB7CiAgICAKICAgIHRlc3RkYXRhIDwtIG1hdHJpeChmZWF0dXJlc1tbaV1dW2osXSxucm93PTEpCiAgICB0cmFpbmRhdGEgPC0gZmVhdHVyZXMKICAgIHRyYWluZGF0YVtbaV1dIDwtIHRyYWluZGF0YVtbaV1dWy1qLCxkcm9wPUZBTFNFXQogICAgCiAgICAjIHNraXAgb3ZlciBhdXRob3JzIHdobyBkb250IGhhdmUgZW5vdWdoIGJvb2tzIGluIHRoZWlyIGNvcnB1cy4gCiAgICBpZiAobnJvdyh0cmFpbmRhdGFbW2ldXSkgPT0gMCl7CiAgICAgIG5leHQKICAgIH0KCiAgICBEQXByZWQgPC0gZGlzY3JpbWluYW50Q29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpCiAgICBwcmVkaWN0aW9ucyA8LSBjKHByZWRpY3Rpb25zLCBEQXByZWQpCiAgICAKICAgIEtOTnByZWQgPC0gS05OQ29ycHVzKHRyYWluZGF0YSwgdGVzdGRhdGEpCiAgICBLTk5wcmVkaWN0aW9ucyA8LSBjKEtOTnByZWRpY3Rpb25zLCBLTk5wcmVkKQogICAgdHJ1dGggPC0gYyh0cnV0aCwgaSkKICB9Cn0KCkxPT0NWX0RBYWNjdXJhY3kgPC0gc3VtKHByZWRpY3Rpb25zID09IHRydXRoKSAvIGxlbmd0aCh0cnV0aCkKTE9PQ1ZfS05OYWNjdXJhY3kgPC0gc3VtKEtOTnByZWRpY3Rpb25zID09IHRydXRoKSAvIGxlbmd0aCh0cnV0aCkKYGBgCgpgYGB7cn0KbGlicmFyeShjYXJldCkKCkRBY29uZnVzaW9ubWF0cml4IDwtIGNvbmZ1c2lvbk1hdHJpeChhcy5mYWN0b3IoREFwcmVkcyksIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYXMuZmFjdG9yKHRlc3RsYWJlbHMpKQoKCmBgYApgYGB7cn0KIyBnZXR0aW5nIEtOTiBjb25mdXNpb24gbWF0cml4IHRvIHdvcmsgKGkgdGhpbmsgaXQgZG9lcy4uLikKCiMgdHVybmluZyBsYWJlbHMgaW50byBjaGFyYWN0ZXIgZHR5cGUKS05OcHJlZHNfY2hhciA8LSBhcy5jaGFyYWN0ZXIoS05OcHJlZHMpCnRlc3RsYWJlbHNfY2hhciA8LSBhcy5jaGFyYWN0ZXIodGVzdGxhYmVscykKCiMgbWFraW5nIHN1cmUgdGhlIHByZWRzIGFyZSBhIHN1YnNldCBvZiB0ZXN0bGFiZWxzCnZhbGlkX2luZGljZXMgPC0gS05OcHJlZHNfY2hhciAlaW4lIHRlc3RsYWJlbHNfY2hhcgoKIyBnZXR0aW5nIHRoZSB2YWxpZCBwcmVkcy9sYWJlbHMgZnJvbSB0aGUgY2hhcmFjdGVyCktOTnByZWRzX3ZhbGlkIDwtIEtOTnByZWRzX2NoYXJbdmFsaWRfaW5kaWNlc10KdGVzdGxhYmVsc192YWxpZCA8LSB0ZXN0bGFiZWxzX2NoYXJbdmFsaWRfaW5kaWNlc10KCiMgdHVybmluZyB0aGUgdmFsaWQgcHJlZHMvbGFiZWxzIGJhY2sgaW50byBmYWN0b3JzIGZvciB0aGUgb3V0cHV0IG9mIGNvbmZ1c2lvbm1hdHJpeCAKS05OY29uZnVzaW9ubWF0cml4IDwtIGNvbmZ1c2lvbk1hdHJpeChhcy5mYWN0b3IoS05OcHJlZHNfdmFsaWQpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFzLmZhY3Rvcih0ZXN0bGFiZWxzX3ZhbGlkKSkKCnByaW50KCJEQSBjb25mdXNpb24gbWF0cml4OiIpICAgICAKREFjb25mdXNpb25tYXRyaXgKCnByaW50KCJLTk4gY29uZnVzaW9uIG1hdHJpeCIpCktOTmNvbmZ1c2lvbm1hdHJpeAoKCmBgYAoKYGBge3J9CiMgZmluZGluZyBvdXQgd2hvIHdyb3RlIGZyYW5rZW5zdGVpbiwgdXNpbmcgZXZlcnl0aGluZyBhcGFydCBmcm9tIAojIGZyYW5rZW5zdGVpbiBpbiB0ZWggdHJhaW5pbmcgc2V0IGFuZCBqdXN0IHRoYXQgbm92ZWwgaW4gdGhlIHRlc3Qgc2V0Lgp0cmFpbnNldCA8LSBNJGZlYXR1cmVzWy05XQp0ZXN0c2V0IDwtIE0kZmVhdHVyZXNbWzldXQoKCmZyYW5rZW5zdGVpbl9kYSA8LSBkaXNjcmltaW5hbnRDb3JwdXModHJhaW5zZXQsIHRlc3RzZXQpCmZyYW5rZW5zdGVpbl9rbm4gPC0gS05OQ29ycHVzKHRyYWluc2V0LCB0ZXN0c2V0KQoKcHJpbnQoIkRBIHByZWRpY3Rpb24gb2YgYXV0aG9yOiIpCmZyYW5rZW5zdGVpbl9kYQpwcmludCgiS05OIHByZWRpY3Rpb24gb2YgYXV0aG9yOiIpCmZyYW5rZW5zdGVpbl9rbm4KCnByaW50KCJyZWZlcmVuY2U6IikKcHJpbnQoTSRhdXRob3JuYW1lcykKYGBgCg==</div>
 
 
 
