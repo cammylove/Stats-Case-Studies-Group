@@ -92,7 +92,9 @@ for (i in 1:length(features_filtered)) {
 
 DAacc<- sum(DApredictions == truth) / length(truth)
 KNNacc <- sum(KNNpredictions == truth) / length(truth)
+print("LOOCV accuracy for DA:")
 DAacc
+print("LOOCV accuracy for KNN:")
 KNNacc
 
 
@@ -110,7 +112,7 @@ KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpredictions),
                                       as.factor(truth))
 print("DA cm:")
 DAconfusionmatrix
-print("-------------")
+print("---------------------------------------------")
 print("KNN confusion matrix")
 KNNconfusionmatrix
 ```
@@ -119,7 +121,7 @@ KNNconfusionmatrix
 
 ```{r}
 # finding out who wrote frankenstein, using everything apart from 
-# frankenstein in teh training set and just that novel in the test set.
+# frankenstein in the training set and just that novel in the test set.
 
 trainset <- M$features[-9]
 testset <- M$features[[9]]
