@@ -15,6 +15,14 @@ M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
 set.seed(12345L)
 ```
 
+### The Dataset
+
+The data provided consisted of 'features' which are the word counts for the 70 function words used by each author. These are vectors of 70 elements for each individual book written by the authors. There is also author names which is used to connect the books with the known author of them. 
+
+We used numerical identifiers as opposed to using the names of the authors to identify them with an index, making the process of prediction and training the model a lot more effective. In regards to the `features` list, each row represents an individual book and the columns are the individual function words themselves (columns are sort of immaterial in the sense that we don't often really deal with them explicitly, only in normalising lengths/statistics - SEE THE  FUNCTIONS FOR THAT).  
+
+
+
 ```{r}
 # discriminant analysis and K-nearest neighbours
 
@@ -55,79 +63,64 @@ KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
 
 ```
 ---
+---
 ```{r}
-# LOO-CV, may need to do these in separate chunks for both methods.
 
-predictions <- NULL
+
+DApredictions <- NULL
 KNNpredictions <- NULL
 truth <- NULL
 features <- M$features
 
-# loop over all of the books, adding all but one of them into the training set
-# and keeping one out for the test set (j in each loop)
-for (i in 1:length(features)) {
-  for (j in 1:nrow(features[[i]])) {
-    
-    testdata <- matrix(features[[i]][j,],nrow=1)
-    traindata <- features
-    traindata[[i]] <- traindata[[i]][-j,,drop=FALSE]
-    
-    # skip over authors who dont have enough books in their corpus. 
-    if (nrow(traindata[[i]]) == 0){
-      next
-    }
+# Filter out authors with only one document
+authors_to_keep <- sapply(features, function(x) nrow(x) > 1)
+features_filtered <- features[authors_to_keep]
 
-    DApred <- discriminantCorpus(traindata, testdata)
-    predictions <- c(predictions, DApred)
+for (i in 1:length(features_filtered)) {
+  for (j in 1:nrow(features_filtered[[i]])) {
+    testdata <- matrix(features_filtered[[i]][j, ], nrow = 1)
+    traindata <- features_filtered
+    traindata[[i]] <- traindata[[i]][-j, , drop = FALSE]
     
-    KNNpred <- KNNCorpus(traindata, testdata)
-    KNNpredictions <- c(KNNpredictions, KNNpred)
+    pred <- discriminantCorpus(traindata, testdata)
+    DApredictions <- c(DApredictions, pred)
+    pred <- KNNCorpus(traindata, testdata)
+    KNNpredictions <- c(KNNpredictions, pred)
     truth <- c(truth, i)
   }
 }
 
-LOOCV_DAaccuracy <- sum(predictions == truth) / length(truth)
-LOOCV_KNNaccuracy <- sum(KNNpredictions == truth) / length(truth)
+DAacc<- sum(DApredictions == truth) / length(truth)
+KNNacc <- sum(KNNpredictions == truth) / length(truth)
+DAacc
+KNNacc
+
+
 ```
+---
+
 
 ```{r}
 library(caret)
 
-DAconfusionmatrix <- confusionMatrix(as.factor(DApreds), 
-                                     as.factor(testlabels))
+DAconfusionmatrix <- confusionMatrix(as.factor(DApredictions), 
+                                     as.factor(truth))
 
-
-```
-```{r}
-# getting KNN confusion matrix to work (i think it does...)
-
-# turning labels into character dtype
-KNNpreds_char <- as.character(KNNpreds)
-testlabels_char <- as.character(testlabels)
-
-# making sure the preds are a subset of testlabels
-valid_indices <- KNNpreds_char %in% testlabels_char
-
-# getting the valid preds/labels from the character
-KNNpreds_valid <- KNNpreds_char[valid_indices]
-testlabels_valid <- testlabels_char[valid_indices]
-
-# turning the valid preds/labels back into factors for the output of confusionmatrix 
-KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpreds_valid),
-                                      as.factor(testlabels_valid))
-
-print("DA confusion matrix:")     
+KNNconfusionmatrix <- confusionMatrix(as.factor(KNNpredictions),
+                                      as.factor(truth))
+print("DA cm:")
 DAconfusionmatrix
-
+print("-------------")
 print("KNN confusion matrix")
 KNNconfusionmatrix
-
-
 ```
+
+
 
 ```{r}
 # finding out who wrote frankenstein, using everything apart from 
 # frankenstein in teh training set and just that novel in the test set.
+
 trainset <- M$features[-9]
 testset <- M$features[[9]]
 
@@ -143,3 +136,14 @@ frankenstein_knn
 print("reference:")
 print(M$authornames)
 ```
+What this predicts is that Discriminant Analysis predicts that William Godwin wrote Frankenstein! Author 10 (+1=11, indexing issue.)
+
+
+*** Probabilities were found in this gap, used to be a code chunk here, literally just ripping discriminantCorpus then using log-sum-exp trick in the line where which.max(probs) was to find the posterior probabilities. Ill probably put it back later if its genuinely becoming useful but doesnt look like it :(. ***
+
+
+
+
+
+
+The discriminant corpus model appears to be overconfident that William Godwin wrote Frankenstein with its incredibly high probability (predicted as probability one). This could be for a variety of reasons. One is that there are a lot more (5) books in the total corpus written by this author, only Sir Walter Scott and Mary Shelley have more more books in the corpus (6). This could be indicative of there potentially not being valid assumptions to justify using such a model. The assumptions made are that some of the word counts are forced to not be zero. IT could also be a bias to authors who do not use a word very often, or did not in a certain book. Analysing Shelley's work further (V56) we see that in Frankenstein this word was used 3 times, and used it as many as 84 times in 'Lodore'. William Godwin, on the other hand, used V56 6 and 7 times in two novels, in Damon and Imogen respectively. This potential bias presented due to the extreme usage/disusage of specific words may pose a challenge to this particular kind of model due to the methods used to calculate probabilities and the multinomial nature of the 'bag of words' hypothesis used in its formulation. 
