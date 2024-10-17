@@ -12,7 +12,7 @@ source("~/Desktop/SCSProj1/stylometryfunctions.R")
 # as above
 M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
 
-set.seed(12345L)
+set.seed(1)
 ```
 
 ### The Dataset
@@ -124,28 +124,24 @@ KNNconfusionmatrix
 # frankenstein in the training set and just that novel in the test set.
 
 trainset <- M$features[-9]
-testset <- M$features[[9]]
-
+testset <- M$features[9]
+testset <- testset[[1]]
+new_authors <- M$authornames[-9]
 
 frankenstein_da <- discriminantCorpus(trainset, testset)
 frankenstein_knn <- KNNCorpus(trainset, testset)
 
 print("DA prediction of author:")
-frankenstein_da
+new_authors[frankenstein_da]
 print("KNN prediction of author:")
-frankenstein_knn
+new_authors[frankenstein_knn]
 
-print("reference:")
-print(M$authornames)
+
 ```
 What this predicts is that Discriminant Analysis predicts that William Godwin wrote Frankenstein! Author 10 (+1=11, indexing issue.)
 
 
 *** Probabilities were found in this gap, used to be a code chunk here, literally just ripping discriminantCorpus then using log-sum-exp trick in the line where which.max(probs) was to find the posterior probabilities. Ill probably put it back later if its genuinely becoming useful but doesnt look like it :(. ***
-
-
-
-
 
 
 The discriminant corpus model appears to be overconfident that William Godwin wrote Frankenstein with its incredibly high probability (predicted as probability one). This could be for a variety of reasons. One is that there are a lot more (5) books in the total corpus written by this author, only Sir Walter Scott and Mary Shelley have more more books in the corpus (6). This could be indicative of there potentially not being valid assumptions to justify using such a model. The assumptions made are that some of the word counts are forced to not be zero. IT could also be a bias to authors who do not use a word very often, or did not in a certain book. Analysing Shelley's work further (V56) we see that in Frankenstein this word was used 3 times, and used it as many as 84 times in 'Lodore'. William Godwin, on the other hand, used V56 6 and 7 times in two novels, in Damon and Imogen respectively. This potential bias presented due to the extreme usage/disusage of specific words may pose a challenge to this particular kind of model due to the methods used to calculate probabilities and the multinomial nature of the 'bag of words' hypothesis used in its formulation. 
