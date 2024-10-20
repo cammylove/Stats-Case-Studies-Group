@@ -19,7 +19,9 @@ set.seed(1)
 
 The data provided consisted of 'features' which are the word counts for the 70 function words used by each author. These are vectors of 70 elements for each individual book written by the authors. There is also author names which is used to connect the books with the known author of them. 
 
-We used numerical identifiers as opposed to using the names of the authors to identify them with an index, making the process of prediction and training the model a lot more effective. In regards to the `features` list, each row represents an individual book and the columns are the individual function words themselves (columns are sort of immaterial in the sense that we don't often really deal with them explicitly, only in normalising lengths/statistics - SEE THE  FUNCTIONS FOR THAT).  
+Authors included in teh data set include Mary Shelley, Percy Shelley, Sir Walter Scott, William Godwin, Bram Stoker, as well as others. Since Percy Shelley was primarily a poet as opposed to a novelist, a selection of his poetry has been included alongside his prose to give a greater quantity of data to draw upon. We have, however, classified Percy Shelley's works into both a poetry and prose authorship in order to better be able to group categorise his work for the reason that the frequency in which one would use function words in both poetry and prose may be quite different. 
+
+There is also works included that are known to be co-authored by Mary and Percy Shelley. Again, these are categorised as joint-authorship and not included in the corpuses of Mary or Percy exclusively. 
 
 
 
@@ -124,8 +126,8 @@ KNNconfusionmatrix
 # frankenstein in the training set and just that novel in the test set.
 
 trainset <- M$features[-9]
-testset <- M$features[9]
-testset <- testset[[1]]
+testset <- M$features[[9]]
+
 new_authors <- M$authornames[-9]
 
 frankenstein_da <- discriminantCorpus(trainset, testset)
@@ -136,12 +138,34 @@ new_authors[frankenstein_da]
 print("KNN prediction of author:")
 new_authors[frankenstein_knn]
 
+wp_thetas <- NULL
+wp_books <- M$features[10]
+wp_words <- apply(M$features[[10]], 2, sum)
+inds <- which(wp_words==0) 
+if (length(inds) > 0) {wp_words[inds] <- 1}
+wp_thetas <- rbind(wp_thetas, wp_words/sum(wp_words))
 
+wp_thetas
+
+fr_thetas <- NULL
+fr_book <- M$features[9]
+fr_words <- apply(M$features[[9]], 2, sum)
+Inds <- which(fr_words==0)
+if (length(Inds)>0) {fr_words[Inds] <- 1}
+fr_thetas <- rbind(fr_thetas, fr_words / sum(fr_words))
+
+fr_thetas
+
+ms_thetas <- NULL
+ms_books <- M$features[4]
+ms_words <- apply(M$features[[4]], 2, sum)
+iinds <- which(ms_words == 0)
+if (length(iinds)>0) {ms_words[iinds] <-1}
+ms_thetas <- rbind(ms_thetas, ms_words / sum(ms_words))
+
+rbind(fr_thetas, wp_thetas, ms_thetas)
 ```
-What this predicts is that Discriminant Analysis predicts that William Godwin wrote Frankenstein! Author 10 (+1=11, indexing issue.)
+Here we observe that there is disagreement between the models, with discriminant analysis predicting that William Godwin was the true author of Frankenstein, whilst the K-nearest-neighbours methodology predicts that Mary Shelley is the author of the novel. 
 
 
-*** Probabilities were found in this gap, used to be a code chunk here, literally just ripping discriminantCorpus then using log-sum-exp trick in the line where which.max(probs) was to find the posterior probabilities. Ill probably put it back later if its genuinely becoming useful but doesnt look like it :(. ***
 
-
-The discriminant corpus model appears to be overconfident that William Godwin wrote Frankenstein with its incredibly high probability (predicted as probability one). This could be for a variety of reasons. One is that there are a lot more (5) books in the total corpus written by this author, only Sir Walter Scott and Mary Shelley have more more books in the corpus (6). This could be indicative of there potentially not being valid assumptions to justify using such a model. The assumptions made are that some of the word counts are forced to not be zero. IT could also be a bias to authors who do not use a word very often, or did not in a certain book. Analysing Shelley's work further (V56) we see that in Frankenstein this word was used 3 times, and used it as many as 84 times in 'Lodore'. William Godwin, on the other hand, used V56 6 and 7 times in two novels, in Damon and Imogen respectively. This potential bias presented due to the extreme usage/disusage of specific words may pose a challenge to this particular kind of model due to the methods used to calculate probabilities and the multinomial nature of the 'bag of words' hypothesis used in its formulation. 
