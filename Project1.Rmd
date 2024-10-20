@@ -12,7 +12,7 @@ source("~/Desktop/SCSProj1/stylometryfunctions.R")
 # as above
 M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
 
-set.seed(1)
+set.seed(12345L)
 ```
 
 ### The Dataset
@@ -23,7 +23,155 @@ Authors included in teh data set include Mary Shelley, Percy Shelley, Sir Walter
 
 There is also works included that are known to be co-authored by Mary and Percy Shelley. Again, these are categorised as joint-authorship and not included in the corpuses of Mary or Percy exclusively. 
 
+```{r} 
+#Visualisaiton of the data with mds
 
+x <- NULL
+for (i in 1:length(M$features)){
+  x <- rbind(x, apply(M$features[[i]], 2, sum))
+}
+
+for (i in 1:nrow(x)){
+  x[i,] <- x[i,] / sum(x[i,])
+}
+for (j in 1:ncol(x)) {
+  x[,j] <- (x[,j] - mean(x[,j]))/sd(x[,j])
+}
+
+d <- dist(x)
+pts <- cmdscale(d)
+plot(pts,type='n')
+text(pts[,1],pts[,2],label=M$authornames,cex=0.8)
+
+
+```
+```{r}
+x <- NULL           
+doc_authors <- c() 
+
+# Loop over each author
+for (i in 1:length(M$features)) {
+  current_data <- M$features[[i]]  
+  
+  # N docs for current author i 
+  num_docs <- nrow(current_data)
+  
+  # add document data to x
+  x <- rbind(x, current_data)
+  
+  # document authors
+  doc_authors <- c(doc_authors, rep(M$authornames[i], num_docs))
+}
+
+# normalise/standardise data in books
+for (i in 1:nrow(x)) {
+  x[i, ] <- x[i, ] / sum(x[i, ])
+}
+
+for (j in 1:ncol(x)) {
+  x[, j] <- (x[, j] - mean(x[, j])) / sd(x[, j])
+}
+
+# MDS co-ords
+dist_matrix <- dist(x)
+pts <- cmdscale(dist_matrix)
+
+# indicator for unknown author
+IsAuthor9 <- doc_authors == M$authornames[9]  
+
+## ggplot dataframe
+plot_data <- data.frame(
+  Dim1 = pts[, 1],
+  Dim2 = pts[, 2],
+  Author = doc_authors,
+  IsAuthor9 = IsAuthor9
+)
+
+ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 3) +
+  scale_shape_manual(
+    values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
+    labels = c('FALSE' = 'Other Authors', 'TRUE' = 'Unknown')
+  ) +
+  theme_classic() +
+  theme(legend.position = "right") +
+  guides(
+    shape = guide_legend(title = "Document Type"),
+    color = guide_legend(override.aes = list(size = 4))
+  ) +
+  labs(
+    title = "MDS Plot of Books",
+    x = "Dimension 1",
+    y = "Dimension 2"
+  )
+
+
+
+```
+```{r}
+# Visualization of the data with MDS
+
+x <- NULL           
+doc_authors <- c() 
+
+# Loop over each author
+for (i in 1:length(M$features)) {
+  current_data <- M$features[[i]]  
+  
+  # N docs for current author i 
+  num_docs <- nrow(current_data)
+  
+  # add document data to x
+  x <- rbind(x, current_data)
+  
+  # document authors
+  doc_authors <- c(doc_authors, rep(M$authornames[i], num_docs))
+}
+
+# normalise/standardise data in books
+for (i in 1:nrow(x)) {
+  x[i, ] <- x[i, ] / sum(x[i, ])
+}
+
+for (j in 1:ncol(x)) {
+  x[, j] <- (x[, j] - mean(x[, j])) / sd(x[, j])
+}
+
+# MDS co-ords
+dist_matrix <- dist(x)
+pts <- cmdscale(dist_matrix)
+
+# indicator for unknown author
+IsAuthor9 <- doc_authors == M$authornames[9]  
+
+## ggplot dataframe
+plot_data <- data.frame(
+  Dim1 = pts[, 1],
+  Dim2 = pts[, 2],
+  Author = doc_authors,
+  IsAuthor9 = IsAuthor9
+)
+
+ggplot(plot_data, aes(x = Dim2, y = Dim1)) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 3) +
+  scale_shape_manual(
+    values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
+    labels = c('FALSE' = 'Other Authors', 'TRUE' = 'Unknown')
+  ) +
+  theme_classic() +
+  theme(legend.position = "right") +
+  guides(
+    shape = guide_legend(title = "Document Type"),
+    color = guide_legend(override.aes = list(size = 4))
+  ) +
+  labs(
+    title = "MDS Plot of Books",
+    x = "Dimension 2",
+    y = "Dimension 1"
+  )
+
+
+```
 
 ```{r}
 # discriminant analysis and K-nearest neighbours
@@ -92,12 +240,12 @@ for (i in 1:length(features_filtered)) {
   }
 }
 
-DAacc<- sum(DApredictions == truth) / length(truth)
-KNNacc <- sum(KNNpredictions == truth) / length(truth)
+LOOCVDAacc<- sum(DApredictions == truth) / length(truth)
+LOOCVKNNacc <- sum(KNNpredictions == truth) / length(truth)
 print("LOOCV accuracy for DA:")
-DAacc
+LOOCVDAacc
 print("LOOCV accuracy for KNN:")
-KNNacc
+LOOCVKNNacc
 
 
 ```
