@@ -88,10 +88,10 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 3) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 4) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
-    labels = c('FALSE' = 'Other Authors', 'TRUE' = 'Unknown')
+    labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
   theme(legend.position = "right") +
@@ -153,10 +153,10 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim2, y = Dim1)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 3) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 4) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
-    labels = c('FALSE' = 'Other Authors', 'TRUE' = 'Unknown')
+    labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
   theme(legend.position = "right") +
@@ -172,6 +172,12 @@ ggplot(plot_data, aes(x = Dim2, y = Dim1)) +
 
 
 ```
+## rough comments about the visualisation
+
+The visualisation indicates that there is significant overlap between many of the authors, particularly Mary Shelley. Notable outliers to this trend include Bram Stoker, an irish novelist who was active much later than the others, Percy Shelley's poetry works which may be due to the relationship previously discussed between word usage differences between prose and poetry, and Charles Brockden Brown who was an american novelist. A difference in nationality and 'accent' might be the root cause of this. The other authors were all active during a similar time period and from the same country. This overlap may cause issues with our classification models, particularly DA as this relies on estimating word frequencies used by authors, and as we can see there appears to be a great deal of variability in this given the apparent lack of distinction between many of the authors. 
+
+Nevertheless, there is enough differentiation between them to be able to be reasonably confident in the methods we implement, although Mary Shelley may cause issues due to her being fairly 'middle of the pack'- her works look to be the most varied stylistically as well as appearing in and around many other authors. 
+
 
 ```{r}
 # discriminant analysis and K-nearest neighbours
@@ -290,9 +296,9 @@ new_authors[frankenstein_knn]
 ```
 Here we observe that there is disagreement between the models, with discriminant analysis predicting that William Godwin was the true author of Frankenstein, whilst the K-nearest-neighbours methodology predicts that Mary Shelley is the author of the novel. However from our cross-validation we have observed that KNN is far superior for identifying authorship on this dataset than discriminant analysis is. For example, viewing the confusion matrix above indicated that many books using discriminant analysis were misidentified as being the work of Mary Shelley, including one of Godwin's own books. K-nearest neighbours does not, however, have the same issues, demonstrating a high degree of accuracy when tested using cross-validation methods.
 
-There may also be a degree of uncertainty regarding the DA classification of teh athor of Frankenstein. This may be for reasons such as Frankenstein being 
+There may also be a degree of uncertainty regarding the DA classification of the author of Frankenstein. This may be for reasons such as Frankenstein being 
 
-Therefore, this leads up to trust the classification given by KNN more so than that given by Discriminant Analysis. Hence, we are more confident in the assertion that Mary Shelley wrote Frankenstein than any other author given as a result of our Stylometric analysis and validation of the methodology used to arrive at this conclusion. 
+Therefore, this leads up to trust the classification given by KNN more so than that given by Discriminant Analysis. Hence, we are more confident in the assertion that Mary Shelley wrote Frankenstein than any other author given as a result of our Stylometric analysis and validation of the methodology used to arrive at this conclusion.  
 
 ```{r}
 # thiis is just for working out the theta values given to see how they compare with one another for 1)William Godwin 2)Frankenstein 3)Mary SHelley. 
