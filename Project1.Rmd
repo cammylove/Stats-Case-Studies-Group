@@ -41,7 +41,7 @@ for (j in 1:ncol(x)) {
 d <- dist(x)
 pts <- cmdscale(d)
 plot(pts,type='n')
-text(pts[,1],pts[,2],label=M$authornames,cex=0.8)
+text(pts[,1],pts[,2],label=M$authornames,cex=1.5)
 
 
 ```
@@ -216,15 +216,18 @@ DAacc <- sum(DApreds == testlabels) / length(testlabels)
 KNNpreds <- KNNCorpus(traindata, testdata)
 KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
 
+RFpreds <- randomForestCorpus(traindata, testdata)
+RFacc <- sum(RFpreds == testlabels) / length(testlabels)
 
 ```
 ---
 ---
 ```{r}
-
+library(randomForest)
 
 DApredictions <- NULL
 KNNpredictions <- NULL
+RFpredictions <- NULL
 truth <- NULL
 features <- M$features
 
@@ -243,19 +246,22 @@ for (i in 1:length(features_filtered)) {
     pred <- KNNCorpus(traindata, testdata)
     KNNpredictions <- c(KNNpredictions, pred)
     truth <- c(truth, i)
+    
   }
 }
 
 LOOCVDAacc<- sum(DApredictions == truth) / length(truth)
 LOOCVKNNacc <- sum(KNNpredictions == truth) / length(truth)
+
 print("LOOCV accuracy for DA:")
 LOOCVDAacc
 print("LOOCV accuracy for KNN:")
 LOOCVKNNacc
 
 
+
 ```
----
+Our LOOCV tests indicate that whilst both do have an acceptable level of accuracy, we should trust 
 
 
 ```{r}
@@ -272,8 +278,7 @@ print("---------------------------------------------")
 print("KNN confusion matrix")
 KNNconfusionmatrix
 ```
-As we can see, the confusion matrix for discriminant analysis is demonstrating the concern regarding Mary Shelley's writings being in between a lot of other authors, perhaps indicating an explanation as to why there were so many misclassifications (she is class '3' in this because we removed the 1-book authors from the LOOCV to make it work). We can also see that K-NN performs much better in this regard, there are much fewer errors using this method in the cross-validation, as well as the mistake being made is fiarly immaterial in regards to the research question. 
-
+As we can see, the confusion matrix for discriminant analysis is demonstrating the concern regarding Mary Shelley's writings being in between a lot of other authors, perhaps indicating an explanation as to why there were so many misclassifications (she is class '3' in this because we removed the 1-book authors from the LOOCV to make it work). We can also see that K-NN performs much better in this regard, there are much fewer errors using this method in the cross-validation, as well as the mistake being made is fairly immaterial in regards to the research question. 
 
 ## Analysis of Frankenstein
 
@@ -301,6 +306,29 @@ Here we observe that there is disagreement between the models, with discriminant
 There may also be a degree of uncertainty regarding the DA classification of the author of Frankenstein. This may be for reasons such as Frankenstein being 
 
 Therefore, this leads up to trust the classification given by KNN more so than that given by Discriminant Analysis. Hence, we are more confident in the assertion that Mary Shelley wrote Frankenstein than any other author given as a result of our Stylometric analysis and validation of the methodology used to arrive at this conclusion.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 # thiis is just for working out the theta values given to see how they compare with one another for 1)William Godwin 2)Frankenstein 3)Mary SHelley. 
@@ -332,13 +360,23 @@ ms_thetas <- rbind(ms_thetas, ms_words / sum(ms_words))
 rbind(fr_thetas, wp_thetas, ms_thetas)
 dmultinom(x = fr_book[[1]], prob = wp_thetas, log=F)
 ```
-Here we observe that there is disagreement between the models, with discriminant analysis predicting that William Godwin was the true author of Frankenstein, whilst the K-nearest-neighbours methodology predicts that Mary Shelley is the author of the novel. However from our cross-validation we have observed that KNN is far superior for identifying authorship on this dataset than discriminant analysis is. For example, viewing the confusion matrix above indicated that many books using discriminant analysis were misidentified as being the work of Mary Shelley, including one of Godwin's own books. K-nearest neighbours does not, however, have the same issues, demonstrating a high degree of accuracy when tested using cross-validation methods. 
+ 
 
-Therefore, this leads up to trust the classification given by KNN more so than that given by Discriminant Analysis. 
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
-# This is just for testing some things
-library(randomForest)
+# This is just for testing some things, NOT IMPORTANT #
+
 discriminantCorpus1 <- function(traindata, testdata) {
   thetas <- NULL
   
