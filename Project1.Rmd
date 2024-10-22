@@ -261,7 +261,7 @@ LOOCVKNNacc
 
 
 ```
-Our LOOCV tests indicate that whilst both do have an acceptable level of accuracy, we should trust 
+Our LOOCV tests indicate that whilst both do have an acceptable level of accuracy, we should trust KNN more since it has a significantly smaller error rate (=1 - accuracy) than DA. 
 
 
 ```{r}
@@ -279,6 +279,10 @@ print("KNN confusion matrix")
 KNNconfusionmatrix
 ```
 As we can see, the confusion matrix for discriminant analysis is demonstrating the concern regarding Mary Shelley's writings being in between a lot of other authors, perhaps indicating an explanation as to why there were so many misclassifications (she is class '3' in this because we removed the 1-book authors from the LOOCV to make it work). We can also see that K-NN performs much better in this regard, there are much fewer errors using this method in the cross-validation, as well as the mistake being made is fairly immaterial in regards to the research question. 
+
+Empirically, KNN makes only one mistake but DA makes 5 mistakes, enough to really justify using KNN more seriously.  
+
+It does have to be noted-however- that both of them mistake one of CBB's books, with DA allocating it to Mary SHelley and KNN allocating it to William Godwin (don't know if its necessarily the same book).
 
 ## Analysis of Frankenstein
 
