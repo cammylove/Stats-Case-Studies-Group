@@ -221,6 +221,7 @@ RFacc <- sum(RFpreds == testlabels) / length(testlabels)
 
 ```
 ---
+
 ---
 ```{r}
 library(randomForest)
@@ -334,6 +335,26 @@ Therefore, this leads up to trust the classification given by KNN more so than t
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```{r}
 # thiis is just for working out the theta values given to see how they compare with one another for 1)William Godwin 2)Frankenstein 3)Mary SHelley. 
 wp_thetas <- NULL
@@ -365,19 +386,6 @@ rbind(fr_thetas, wp_thetas, ms_thetas)
 dmultinom(x = fr_book[[1]], prob = wp_thetas, log=F)
 ```
  
-
-
-
-
-
-
-
-
-
-
-
-
-
 ```{r}
 # This is just for testing some things, NOT IMPORTANT #
 
