@@ -1,5 +1,5 @@
 ---
-title: "SCS project1 draft"
+title: "SCS project 1"
 output: html_notebook
 ---
 
@@ -15,13 +15,10 @@ M <- loadCorpus("~/Desktop/SCSProj1/FunctionWords/", "frequentwords70")
 set.seed(12345L)
 ```
 
-### The Dataset
+### Code Used to Produce Results
+Code chunks used in our analysis of Frankenstein.
+Includes: visualisations of the data, a sample training and test set applied to both methods, cross-validation of both methods, confusion matrices for our methods, and finally applying the models to Frankenstein to see how it performs. 
 
-The data provided consisted of 'features' which are the word counts for the 70 function words used by each author. These are vectors of 70 elements for each individual book written by the authors. There is also author names which is used to connect the books with the known author of them. 
-
-Authors included in teh data set include Mary Shelley, Percy Shelley, Sir Walter Scott, William Godwin, Bram Stoker, as well as others. Since Percy Shelley was primarily a poet as opposed to a novelist, a selection of his poetry has been included alongside his prose to give a greater quantity of data to draw upon. We have, however, classified Percy Shelley's works into both a poetry and prose authorship in order to better be able to group categorise his work for the reason that the frequency in which one would use function words in both poetry and prose may be quite different. 
-
-There is also works included that are known to be co-authored by Mary and Percy Shelley. Again, these are categorised as joint-authorship and not included in the corpuses of Mary or Percy exclusively. 
 
 ```{r} 
 #Visualisaiton of the data with mds
@@ -41,7 +38,7 @@ for (j in 1:ncol(x)) {
 d <- dist(x)
 pts <- cmdscale(d)
 plot(pts,type='n')
-text(pts[,1],pts[,2],label=M$authornames,cex=1.5)
+text(pts[,1],pts[,2],label=M$authornames,cex=0.8)
 
 
 ```
@@ -88,23 +85,23 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 7) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 2) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
     labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
   theme(legend.position = "right",
-        legend.text = element_text(size=15)) +
+        legend.text = element_text(size=4)) +
   guides(
     shape = guide_legend(title = "Document Type"),
-    color = guide_legend(override.aes = list(size = 10))
+    color = guide_legend(override.aes = list(size = 2))
   ) +
   labs(
     title = "MDS Plot of Books",
     x = "Dimension 1",
-    y = "Dimension 2"
-  )
+    y = "Dimension 2")
+
 
 
 
@@ -154,17 +151,17 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim2, y = Dim1)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 7) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 2) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
     labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
   theme(legend.position = "right",
-        legend.text = element_text(size=15)) +
+        legend.text = element_text(size=4)) +
   guides(
     shape = guide_legend(title = "Document Type"),
-    color = guide_legend(override.aes = list(size = 10))
+    color = guide_legend(override.aes = list(size = 2))
   ) +
   labs(x = "Dimension 2",
        y = "Dimension 1")
@@ -180,6 +177,8 @@ Nevertheless, there is enough differentiation between them to be able to be reas
 
 ```{r}
 # discriminant analysis and K-nearest neighbours
+# taking a sample to see whats happening with a sample training and test set.
+## not included in the report ##
 
 traindata <- M$features
 testdata <- NULL
@@ -222,40 +221,17 @@ KNNacc
 ```
 ---
 
-```{r}
-# making confusion matrices for point estimates obtained above
- 
-all_classes <- sort(unique(c(DApreds, KNNpreds, testlabels)))
-
-# Convert to factors with consistent levels
-DApreds_factor <- factor(DApreds, levels = all_classes)
-testlabels_factor <- factor(testlabels, levels = all_classes)
-KNNpreds_factor <- factor(KNNpreds, levels = all_classes)
-
-
-DApointconfusion <- confusionMatrix(DApreds_factor,
-                                    testlabels_factor)
-
-KNNpointconfusion <- confusionMatrix(KNNpreds_factor,
-                                     testlabels_factor)
-DApointconfusion
-print("---------------------------------")
-KNNpointconfusion
-
-
-
-```
-
 ---
 ```{r}
-library(randomForest)
+# LOOCV code
 
 DApredictions <- NULL
 KNNpredictions <- NULL
 truth <- NULL
 features <- M$features
 
-# Filter out authors with only one document
+# Filter out authors with only one document, deliberate choice
+# to balance out bias as opposed to having 100% or 0% accuracy on these authors
 authors_to_keep <- sapply(features, function(x) nrow(x) > 1)
 features_filtered <- features[authors_to_keep]
 
@@ -302,34 +278,10 @@ print("---------------------------------------------")
 print("KNN confusion matrix")
 KNNconfusionmatrix
 ```
+
 ```{r}
-# trying new method for making confusion matrices for LOOCV
+# making more tables than ikea for the overleaf document
 
-all_classes <- sort(unique(c(DApredictions, KNNpredictions, truth)))
-
-# Convert to factors with consistent levels
-DApredictions_factor <- factor(DApredictions, levels = all_classes)
-truth_factor <- factor(truth, levels = all_classes)
-KNNpredictions_factor <- factor(KNNpredictions, levels = all_classes)
-
-
-DAconfusion <- confusionMatrix(DApredictions_factor,
-                                    truth_factor)
-
-KNNconfusion <- confusionMatrix(KNNpredictions_factor,
-                                     truth_factor)
-print("DA LOOCV matrix for new method:")
-DAconfusion
-print("DA LOOCV matrix for old method (has warning")
-DAconfusionmatrix
-print("KNN LOOCV matrix for new method")
-KNNconfusion
-print("KNN LOOCV matrix for old method")
-KNNconfusionmatrix
-
-```
-```{r}
-# making more tables than ikea
 library(knitr)
 # table for point estimate accuracies
 accuracies <- c(DAacc, KNNacc)
@@ -371,15 +323,11 @@ table3 <- kable(data3,
 
 ```
 
-As we can see, the confusion matrix for discriminant analysis is demonstrating the concern regarding Mary Shelley's writings being in between a lot of other authors, perhaps indicating an explanation as to why there were so many misclassifications (she is class '3' in this because we removed the 1-book authors from the LOOCV to make it work). We can also see that K-NN performs much better in this regard, there are much fewer errors using this method in the cross-validation, as well as the mistake being made is fairly immaterial in regards to the research question. 
 
-Empirically, KNN makes only one mistake but DA makes 5 mistakes, enough to really justify using KNN more seriously.  
-
-It does have to be noted-however- that both of them mistake one of CBB's books, with DA allocating it to Mary SHelley and KNN allocating it to William Godwin (don't know if its necessarily the same book).
 
 ## Analysis of Frankenstein
 
-We shall now apply our methods of Stylometry in an attempt to identify the author of Frankenstein. We shall use the entire corpus obtained as the training set, and test the model in both a KNN and DA setting on the Frankenstein novel. Each model choice will make a prediction as to whom the author is. 
+
 
 ```{r}
 # finding out who wrote frankenstein, using everything apart from 
@@ -398,125 +346,4 @@ new_authors[frankenstein_da]
 print("KNN prediction of author:")
 new_authors[frankenstein_knn]
 ```
-Here we observe that there is disagreement between the models, with discriminant analysis predicting that William Godwin was the true author of Frankenstein, whilst the K-nearest-neighbours methodology predicts that Mary Shelley is the author of the novel. However from our cross-validation we have observed that KNN is far superior for identifying authorship on this dataset than discriminant analysis is. For example, viewing the confusion matrix above indicated that many books using discriminant analysis were misidentified as being the work of Mary Shelley, including one of Godwin's own books. K-nearest neighbours does not, however, have the same issues, demonstrating a high degree of accuracy when tested using cross-validation methods.
-
-There may also be a degree of uncertainty regarding the DA classification of the author of Frankenstein. This may be for reasons such as Frankenstein being 
-
-Therefore, this leads up to trust the classification given by KNN more so than that given by Discriminant Analysis. Hence, we are more confident in the assertion that Mary Shelley wrote Frankenstein than any other author given as a result of our Stylometric analysis and validation of the methodology used to arrive at this conclusion.  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```{r}
-# thiis is just for working out the theta values given to see how they compare with one another for 1)William Godwin 2)Frankenstein 3)Mary SHelley. 
-wp_thetas <- NULL
-wp_books <- M$features[11]
-wp_words <- apply(M$features[[11]], 2, sum)
-inds <- which(wp_words==0) 
-if (length(inds) > 0) {wp_words[inds] <- 1}
-wp_thetas <- rbind(wp_thetas, wp_words/sum(wp_words))
-
-wp_thetas
-
-fr_thetas <- NULL
-fr_book <- M$features[9]
-fr_words <- apply(M$features[[9]], 2, sum)
-Inds <- which(fr_words==0)
-if (length(Inds)>0) {fr_words[Inds] <- 1}
-fr_thetas <- rbind(fr_thetas, fr_words / sum(fr_words))
-
-fr_thetas
-
-ms_thetas <- NULL
-ms_books <- M$features[4]
-ms_words <- apply(M$features[[4]], 2, sum)
-iinds <- which(ms_words == 0)
-if (length(iinds)>0) {ms_words[iinds] <-1}
-ms_thetas <- rbind(ms_thetas, ms_words / sum(ms_words))
-
-rbind(fr_thetas, wp_thetas, ms_thetas)
-dmultinom(x = fr_book[[1]], prob = wp_thetas, log=F)
-```
  
-```{r}
-# This is just for testing some things, NOT IMPORTANT #
-
-discriminantCorpus1 <- function(traindata, testdata) {
-  thetas <- NULL
-  
-  # First, learn the model for each author
-  for (i in 1:length(traindata)) {
-    words <- apply(traindata[[i]], 2, sum)
-    
-    # Ensure no word has a zero count
-    words[words == 0] <- 1
-    thetas <- rbind(thetas, words / sum(words))
-  }
-  
-  # Now classify
-  preds <- matrix(0, nrow = nrow(testdata), ncol = nrow(thetas))
-  for (i in 1:nrow(testdata)) {
-    for (j in 1:nrow(thetas)) {
-      preds[i, j] <- dmultinom(testdata[i, ], prob = thetas[j, ], log = TRUE)
-    }
-  }
-  return(preds)
-}
-
-preds <- discriminantCorpus1(trainset, testset)
-preds
-# Compute probabilities
-probs <- t(apply(preds, 1, function(log_likelihoods) {
-  # Adjust log-likelihoods to prevent numerical underflow
-  max_ll <- max(log_likelihoods)
-  adjusted_lls <- log_likelihoods - max_ll
-  likelihoods <- exp(adjusted_lls)
-  # Normalize to get probabilities
-  probabilities <- likelihoods / sum(likelihoods)
-  return(probabilities)
-}))
-randomForestCorpus(trainset, testset)
-probs #the other method in the package got it right tho???
-```
-
-
