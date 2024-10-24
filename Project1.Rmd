@@ -216,11 +216,34 @@ DAacc <- sum(DApreds == testlabels) / length(testlabels)
 KNNpreds <- KNNCorpus(traindata, testdata)
 KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
 
-RFpreds <- randomForestCorpus(traindata, testdata)
-RFacc <- sum(RFpreds == testlabels) / length(testlabels)
+
 
 ```
 ---
+
+```{r}
+# making confusion matrices for point estimates obtained above
+ 
+all_classes <- sort(unique(c(DApreds, KNNpreds, testlabels)))
+
+# Convert to factors with consistent levels
+DApreds_factor <- factor(DApreds, levels = all_classes)
+testlabels_factor <- factor(testlabels, levels = all_classes)
+KNNpreds_factor <- factor(KNNpreds, levels = all_classes)
+
+
+DApointconfusion <- confusionMatrix(DApreds_factor,
+                                    testlabels_factor)
+
+KNNpointconfusion <- confusionMatrix(KNNpreds_factor,
+                                     testlabels_factor)
+DApointconfusion
+print("---------------------------------")
+KNNpointconfusion
+
+
+
+```
 
 ---
 ```{r}
@@ -228,7 +251,6 @@ library(randomForest)
 
 DApredictions <- NULL
 KNNpredictions <- NULL
-RFpredictions <- NULL
 truth <- NULL
 features <- M$features
 
@@ -279,6 +301,33 @@ print("---------------------------------------------")
 print("KNN confusion matrix")
 KNNconfusionmatrix
 ```
+```{r}
+# trying new method for making confusion matrices for LOOCV
+
+all_classes <- sort(unique(c(DApredictions, KNNpredictions, truth)))
+
+# Convert to factors with consistent levels
+DApredictions_factor <- factor(DApredictions, levels = all_classes)
+truth_factor <- factor(truth, levels = all_classes)
+KNNpredictions_factor <- factor(KNNpredictions, levels = all_classes)
+
+
+DAconfusion <- confusionMatrix(DApredictions_factor,
+                                    truth_factor)
+
+KNNconfusion <- confusionMatrix(KNNpredictions_factor,
+                                     truth_factor)
+print("DA LOOCV matrix for new method:")
+DAconfusion
+print("DA LOOCV matrix for old method (has warning")
+DAconfusionmatrix
+print("KNN LOOCV matrix for new method")
+KNNconfusion
+print("KNN LOOCV matrix for old method")
+KNNconfusionmatrix
+
+```
+
 As we can see, the confusion matrix for discriminant analysis is demonstrating the concern regarding Mary Shelley's writings being in between a lot of other authors, perhaps indicating an explanation as to why there were so many misclassifications (she is class '3' in this because we removed the 1-book authors from the LOOCV to make it work). We can also see that K-NN performs much better in this regard, there are much fewer errors using this method in the cross-validation, as well as the mistake being made is fairly immaterial in regards to the research question. 
 
 Empirically, KNN makes only one mistake but DA makes 5 mistakes, enough to really justify using KNN more seriously.  
