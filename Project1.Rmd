@@ -215,6 +215,8 @@ DAacc <- sum(DApreds == testlabels) / length(testlabels)
 # obtaining KNN prediction and accuracy (naive)
 KNNpreds <- KNNCorpus(traindata, testdata)
 KNNacc <- sum(KNNpreds == testlabels) / length(testlabels)
+DAacc
+KNNacc
 
 
 
@@ -325,6 +327,48 @@ print("KNN LOOCV matrix for new method")
 KNNconfusion
 print("KNN LOOCV matrix for old method")
 KNNconfusionmatrix
+
+```
+```{r}
+# making more tables than ikea
+library(knitr)
+# table for point estimate accuracies
+accuracies <- c(DAacc, KNNacc)
+data1 <- matrix(accuracies, ncol=1, nrow=2)
+colnames(data1) = c("Accuracy")
+rownames(data1) = c("DA", 'KNN')
+
+
+table1 <- kable(data1,
+                format = "latex",
+                booktabs = TRUE,
+                caption = "Point Accuracies of Stylometry Methods",
+                linesep = "")
+
+LOOCVaccuracies <- c(LOOCVDAacc, LOOCVKNNacc)
+data2 <- matrix (LOOCVaccuracies, ncol=1, nrow=2)
+colnames(data2) = c("Accuracy")
+rownames(data2) = c("DA","KNN")
+
+table2 <- kable(data2, 
+                format = "latex",
+                booktabs = TRUE,
+                caption = "LOOCV Accuracies of Stylometry Methods",
+                linesep = "")
+
+# table for frankenstein analysis
+
+prediction_frankenstein <- c(new_authors[frankenstein_da],
+                             new_authors[frankenstein_knn])
+data3 <- matrix(prediction_frankenstein, ncol=2)
+colnames(data3) = c("DA Prediction", "KNN Prediction")
+
+table3 <- kable(data3, 
+                format = "latex",
+                booktabs = T,
+                caption = "Frankenstein Authorship Prediction, by Method",
+                linesep = "")
+
 
 ```
 
