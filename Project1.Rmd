@@ -88,16 +88,17 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 4) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 7) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
     labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
-  theme(legend.position = "right") +
+  theme(legend.position = "right",
+        legend.text = element_text(size=15)) +
   guides(
     shape = guide_legend(title = "Document Type"),
-    color = guide_legend(override.aes = list(size = 4))
+    color = guide_legend(override.aes = list(size = 10))
   ) +
   labs(
     title = "MDS Plot of Books",
@@ -109,7 +110,7 @@ ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
 
 ```
 ```{r}
-# Visualization of the data with MDS
+# Visualization of the data with MDS second time
 
 x <- NULL           
 doc_authors <- c() 
@@ -153,22 +154,20 @@ plot_data <- data.frame(
 )
 
 ggplot(plot_data, aes(x = Dim2, y = Dim1)) +
-  geom_point(aes(color = Author, shape = IsAuthor9), size = 4) +
+  geom_point(aes(color = Author, shape = IsAuthor9), size = 7) +
   scale_shape_manual(
     values = c('FALSE' = 16, 'TRUE' = 4),  # 16: circle, 4: 'x'
     labels = c('FALSE' = 'Known Author', 'TRUE' = 'Unknown')
   ) +
   theme_classic() +
-  theme(legend.position = "right") +
+  theme(legend.position = "right",
+        legend.text = element_text(size=15)) +
   guides(
     shape = guide_legend(title = "Document Type"),
-    color = guide_legend(override.aes = list(size = 4))
+    color = guide_legend(override.aes = list(size = 10))
   ) +
-  labs(
-    title = "MDS Plot of Books",
-    x = "Dimension 2",
-    y = "Dimension 1"
-  )
+  labs(x = "Dimension 2",
+       y = "Dimension 1")
 
 
 ```
