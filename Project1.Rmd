@@ -107,7 +107,7 @@ ggplot(plot_data, aes(x = Dim1, y = Dim2)) +
 
 ```
 ```{r}
-# Visualization of the data with MDS second time
+# Visualization of the data with MDS second time,flipping axes. 
 
 x <- NULL           
 doc_authors <- c() 
